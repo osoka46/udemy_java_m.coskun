@@ -1,83 +1,81 @@
 package Hafiza_Oyunu;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    public static Kart kartlar[][] = new Kart[4][4];
+    static Kart[][] kartlar = new Kart[4][4];
 
+    public static void creatArr() {
+        kartlar[0][0] = new Kart('A');
+        kartlar[0][1] = new Kart('A');
+        kartlar[0][2] = new Kart('B');
+        kartlar[0][3] = new Kart('B');
+        kartlar[1][0] = new Kart('C');
+        kartlar[1][1] = new Kart('C');
+        kartlar[1][2] = new Kart('D');
+        kartlar[1][3] = new Kart('D');
+        kartlar[2][0] = new Kart('E');
+        kartlar[2][1] = new Kart('E');
+        kartlar[2][2] = new Kart('F');
+        kartlar[2][3] = new Kart('F');
+        kartlar[3][0] = new Kart('G');
+        kartlar[3][1] = new Kart('G');
+        kartlar[3][2] = new Kart('H');
+        kartlar[3][3] = new Kart('H');
+    }
 
-    public static void oyunTahtasi() {
-
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                if (kartlar[i][j].isTahmin()) {
-                    System.out.print(kartlar[i][j].getDeger() + "  ");
+    public static void createTable() {
+        for (Kart[] arr : kartlar) {
+            for (Kart items : arr) {
+                if (items.isTahmin()) {
+                    System.out.print(" |" + items.getDeger() + " |");
+                } else {
+                    System.out.print(" |" + " |");
                 }
             }
             System.out.println();
-            System.out.println();
         }
     }
 
-    public static void creatArr() {
-        char deger = 'A';
-        for (int i = 0; i < kartlar.length; i++) {
-            for (int j = 0; j < kartlar[i].length; j++) {
-                kartlar[i][j] = new Kart(deger++);
-            }
+    public static void tahminEt() {
+        Scanner input = new Scanner(System.in);
+        int x1, x2, y1, y2;
+        System.out.println("arada bosluk birakarak ilk kordinati 0-3 arasi 2 adet sayi giriniz: \n");
+        x1 = input.nextInt();
+        y1 = input.nextInt();
+        kartlar[x1][y1].setTahmin(true);
+        createTable();
+        System.out.println("arada bosluk birakarak ikinci kordinati 0-3 arasi 2 adet sayi giriniz: \n");
+        x2 = input.nextInt();
+        y2 = input.nextInt();
+        if (kartlar[x1][y1].getDeger() == kartlar[x2][y2].getDeger()) {
+            System.out.println("dogru tahmin");
+            kartlar[x1][y1].setTahmin(true);
+            kartlar[x2][y2].setTahmin(true);
+        } else {
+            System.out.println("yanlis tahmin");
+            kartlar[x1][y1].setTahmin(false);
         }
     }
-
-    public static boolean oyunBittimi() {
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                if (!kartlar[i][j].isTahmin())
+    public static boolean oyunBittimi()
+    {
+        for (Kart[] arr : kartlar) {
+            for (Kart items : arr) {
+                if (!items.isTahmin()) {
                     return false;
+                }
             }
         }
         return true;
-    }
-    public static void tahminEt()
-    {
-        Scanner input=new Scanner(System.in);
-        System.out.println("tahmin et: x ve y degerlerini 1 bosluk ile girin: \n");
-        int i1= input.nextInt();
-        int j1= input.nextInt();
-        kartlar[i1][j1].setTahmin(true);
-        oyunTahtasi();
-        System.out.println("tahmin et: x ve y degerlerini 1 bosluk ile girin:\n");
-        int i2= input.nextInt();
-        int j2= input.nextInt();
-
-        if (kartlar[i1][j1].getDeger()==kartlar[i2][j2].getDeger())
-        {
-            kartlar[i1][j2].setTahmin(true);
-
-        }else {
-            kartlar[i1][j1].setTahmin(false);
-        }
     }
 
     public static void main(String[] args) {
         creatArr();
         while (!oyunBittimi())
         {
-            oyunTahtasi();
+            createTable();
             tahminEt();
         }
-
-      //  oyunTahtasi();
-
     }
 }
-
-/*
-for (Kart kart[]:kartlar)
-        {
-        for (Kart kart1:kart) {
-        System.out.print(kart1.getDeger()+"  ");
-        }
-        System.out.println();
-        System.out.println();
-        }*/
