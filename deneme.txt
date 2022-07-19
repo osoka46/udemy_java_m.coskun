@@ -1,0 +1,4 @@
+osman bozdag,40,60,25
+rabia bozdag,59,29,10
+sukru cebeci,60,80,81
+oguz kanks,30,59,25
